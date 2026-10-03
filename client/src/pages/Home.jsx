@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
+import EventCard from '../components/EventCard'
+import sampleEvents from '../Data/sampleEvents'
 
 function Home() {
+  const upcomingEvents = sampleEvents.slice(0, 3)
+
   return (
     <div>
       <section className="hero">
@@ -10,6 +14,18 @@ function Home() {
           QR pass for easy check-in.
         </p>
         <Link to="/events" className="btn">Browse Events</Link>
+      </section>
+
+      <section>
+        <h2 className="section-title">Upcoming Events</h2>
+        <div className="events-grid">
+          {upcomingEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+        <div className="view-all">
+          <Link to="/events">View all events →</Link>
+        </div>
       </section>
 
       <section className="features">

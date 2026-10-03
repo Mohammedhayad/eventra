@@ -1,20 +1,31 @@
-import EventCard from '../components/EventCard'
-import sampleEvents from '../data/SampleEventsampleEvents'
+import './EventCard.css'
 
-function Events() {
+function EventCard({ event }) {
+  const formattedDate = new Date(event.date).toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+
+  const isFree = event.fee === 0
+
   return (
-    <div>
-      <h2>All Events</h2>
-      <p style={{ marginBottom: '20px' }}>
-        {sampleEvents.length} events coming up on campus.
-      </p>
-      <div className="events-grid">
-        {sampleEvents.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+    <div className="event-card">
+      <div className="event-banner">{event.category}</div>
+      <div className="event-body">
+        <h3>{event.title}</h3>
+        <p className="event-meta">📅 {formattedDate} · {event.time}</p>
+        <p className="event-meta">📍 {event.venue}</p>
+        <p className="event-desc">{event.description}</p>
+        <div className="event-footer">
+          <span className={isFree ? 'badge badge-free' : 'badge badge-paid'}>
+            {isFree ? 'Free' : `₹${event.fee}`}
+          </span>
+          <button className="card-btn">View details</button>
+        </div>
       </div>
     </div>
   )
 }
 
-export default Events
+export default EventCard

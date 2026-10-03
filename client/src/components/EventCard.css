@@ -59,7 +59,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .event-footer {
   display: flex;
   justify-content: space-between;
