@@ -1,0 +1,20 @@
+.nav-user {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.nav-logout {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.nav-logout:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}

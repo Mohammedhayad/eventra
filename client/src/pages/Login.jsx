@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import useAuth from '../hooks/useAuth'
 import { isCollegeEmail, COLLEGE_EMAIL_MESSAGE } from '../utils/validators'
 import './Auth.css'
 
 function Login() {
+  const navigate = useNavigate()
+  const { login } = useAuth()
+
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
@@ -17,7 +20,6 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    setSuccess('')
 
     if (!isCollegeEmail(formData.email)) {
       setError(COLLEGE_EMAIL_MESSAGE)
@@ -32,7 +34,10 @@ function Login() {
     try {
       setLoading(true)
       const response = await api.post('/auth/login', formData)
-      setSuccess(`Login successful. Welcome, ${response.data.user.name}!`)
+      const { token, user } = response.data
+
+      login(token, user)
+      navigate(user.role === 'admin' ? '/admin' : '/dashboard')
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -50,7 +55,6 @@ function Login() {
         <p className="auth-subtitle">Login with your college mail id.</p>
 
         {error && <div className="alert alert-error">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-group">

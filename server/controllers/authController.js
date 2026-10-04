@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/User.js'
+import generateToken from '../utils/generateToken.js'
 import { isCollegeEmail, COLLEGE_EMAIL_MESSAGE } from '../utils/validators.js'
 
 const formatUser = (user) => ({
@@ -75,9 +76,14 @@ export const loginUser = async (req, res) => {
 
     res.json({
       message: 'Login successful',
+      token: generateToken(user._id),
       user: formatUser(user),
     })
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message })
   }
+}
+
+export const getMe = (req, res) => {
+  res.json({ user: formatUser(req.user) })
 }
