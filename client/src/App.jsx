@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import StudentDashboard from './pages/StudentDashboard'
 import AdminDashboard from './pages/AdminDashboard'
+import EventForm from './pages/EventForm'
 import NotFound from './pages/NotFound'
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
 
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/events/new" element={<EventForm />} />
+          <Route path="/admin/events/:id/edit" element={<EventForm />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
@@ -32,4 +35,4 @@ function App() {
   )
 }
 
-export default App
+export default App  

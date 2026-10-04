@@ -7,7 +7,7 @@ function EventCard({ event }) {
     year: 'numeric',
   })
 
-  const isFree = event.fee === 0
+  const isFree = !event.registrationFee
 
   return (
     <div className="event-card">
@@ -19,7 +19,7 @@ function EventCard({ event }) {
         <p className="event-desc">{event.description}</p>
         <div className="event-footer">
           <span className={isFree ? 'badge badge-free' : 'badge badge-paid'}>
-            {isFree ? 'Free' : `₹${event.fee}`}
+            {isFree ? 'Free' : `₹${event.registrationFee}`}
           </span>
           <button className="card-btn">View details</button>
         </div>
