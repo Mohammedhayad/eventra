@@ -1,0 +1,82 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.details-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.details-banner {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: var(--white);
+  padding: 40px 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.details-body {
+  padding: 24px;
+}
+
+.details-body h2 {
+  margin-bottom: 16px;
+}
+
+.details-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.meta-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.meta-value {
+  font-weight: 600;
+}
+
+.details-description {
+  white-space: pre-wrap;
+  margin-bottom: 24px;
+}
+
+.details-actions {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.details-actions .alert {
+  margin-bottom: 12px;
+}
+
+.details-actions button.btn {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.details-actions button.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

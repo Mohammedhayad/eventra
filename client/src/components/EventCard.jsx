@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './EventCard.css'
 
 function EventCard({ event }) {
@@ -21,7 +22,9 @@ function EventCard({ event }) {
           <span className={isFree ? 'badge badge-free' : 'badge badge-paid'}>
             {isFree ? 'Free' : `₹${event.registrationFee}`}
           </span>
-          <button className="card-btn">View details</button>
+          <Link to={`/events/${event._id}`} className="card-btn">
+            View details
+          </Link>
         </div>
       </div>
     </div>
