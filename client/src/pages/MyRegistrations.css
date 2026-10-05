@@ -1,0 +1,40 @@
+.registration-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.registration-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.registration-info h3 {
+  margin-bottom: 6px;
+}
+
+.registration-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.status-line {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .registration-status {
+    align-items: flex-start;
+  }
+}

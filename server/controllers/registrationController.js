@@ -24,7 +24,7 @@ export const registerForEvent = async (req, res) => {
 
     if (event.registrationFee > 0) {
       return res.status(400).json({
-        message: 'Registration for paid events will open once online payment is available',
+        message: 'This is a paid event. Please complete the payment to register.',
       })
     }
 
@@ -36,11 +36,11 @@ export const registerForEvent = async (req, res) => {
       return res.status(409).json({ message: 'You are already registered for this event' })
     }
 
-    const registeredCount = await Registration.countDocuments({
+    const confirmedCount = await Registration.countDocuments({
       event: event._id,
-      registrationStatus: { $ne: 'cancelled' },
+      registrationStatus: 'confirmed',
     })
-    if (registeredCount >= event.maxCapacity) {
+    if (confirmedCount >= event.maxCapacity) {
       return res.status(400).json({ message: 'Sorry, this event is full' })
     }
 

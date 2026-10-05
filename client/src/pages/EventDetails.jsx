@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import api from '../services/api'
 import useAuth from '../hooks/useAuth'
+import { loadRazorpayScript } from '../utils/razorpay'
 import './Auth.css'
 import './EventDetails.css'
 
@@ -26,7 +27,9 @@ function EventDetails() {
           const registrationsResponse = await api.get('/registrations/my')
           setIsRegistered(
             registrationsResponse.data.registrations.some(
-              (registration) => registration.event._id === id
+              (registration) =>
+                registration.event._id === id &&
+                registration.registrationStatus === 'confirmed'
             )
           )
         }
@@ -44,6 +47,7 @@ function EventDetails() {
     loadData()
   }, [id, user])
 
+  // Free events
   const handleRegister = async () => {
     setError('')
     setMessage('')
@@ -58,6 +62,67 @@ function EventDetails() {
         err.response?.data?.message || 'Could not register. Please try again.'
       )
     } finally {
+      setRegistering(false)
+    }
+  }
+
+  // Paid events
+  const handlePayment = async () => {
+    setError('')
+    setMessage('')
+    setRegistering(true)
+
+    try {
+      const scriptLoaded = await loadRazorpayScript()
+      if (!scriptLoaded) {
+        setError('Could not load the payment window. Check your internet connection.')
+        setRegistering(false)
+        return
+      }
+
+      const { data } = await api.post('/payments/create-order', { eventId: id })
+
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: 'Eventra',
+        description: data.eventTitle,
+        order_id: data.orderId,
+        prefill: {
+          name: user.name,
+          email: user.email,
+        },
+        theme: { color: '#4f46e5' },
+        handler: async (response) => {
+          try {
+            // Our server checks the signature. We never trust this callback alone.
+            await api.post('/payments/verify', response)
+            setIsRegistered(true)
+            setMessage('Payment successful! You are registered for this event.')
+          } catch (err) {
+            setError(
+              err.response?.data?.message ||
+                'Payment could not be verified. If money was deducted, please contact the organizers.'
+            )
+          } finally {
+            setRegistering(false)
+          }
+        },
+        modal: {
+          ondismiss: () => setRegistering(false),
+        },
+      }
+
+      const razorpay = new window.Razorpay(options)
+      razorpay.on('payment.failed', (response) => {
+        setError(response.error?.description || 'Payment failed. Please try again.')
+      })
+      razorpay.open()
+    } catch (err) {
+      setError(
+        err.response?.data?.message || 'Could not start the payment. Please try again.'
+      )
       setRegistering(false)
     }
   }
@@ -110,9 +175,14 @@ function EventDetails() {
     }
     if (!isFree) {
       return (
-        <button className="btn" disabled>
-          Online payment coming soon
-        </button>
+        <div>
+          <button className="btn" onClick={handlePayment} disabled={registering}>
+            {registering ? 'Please wait...' : `Pay ₹${event.registrationFee} & register`}
+          </button>
+          <p className="form-hint" style={{ marginTop: '8px' }}>
+            Payments are processed securely by Razorpay.
+          </p>
+        </div>
       )
     }
     return (

@@ -7,6 +7,7 @@ import EventDetails from './pages/EventDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import StudentDashboard from './pages/StudentDashboard'
+import MyRegistrations from './pages/MyRegistrations'
 import AdminDashboard from './pages/AdminDashboard'
 import EventForm from './pages/EventForm'
 import NotFound from './pages/NotFound'
@@ -23,6 +24,7 @@ function App() {
 
         <Route element={<ProtectedRoute allowedRoles={['student']} />}>
           <Route path="/dashboard" element={<StudentDashboard />} />
+          <Route path="/my-registrations" element={<MyRegistrations />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

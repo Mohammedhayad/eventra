@@ -24,7 +24,10 @@ function Navbar() {
               {user.role === 'admin' ? (
                 <NavLink to="/admin">Admin Dashboard</NavLink>
               ) : (
-                <NavLink to="/dashboard">My Dashboard</NavLink>
+                <>
+                  <NavLink to="/my-registrations">My Registrations</NavLink>
+                  <NavLink to="/dashboard">My Dashboard</NavLink>
+                </>
               )}
               <span className="nav-user">Hi, {user.name}</span>
               <button className="nav-logout" onClick={handleLogout}>
