@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminLayout from './components/AdminLayout'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import EventDetails from './pages/EventDetails'
@@ -10,6 +11,9 @@ import StudentDashboard from './pages/StudentDashboard'
 import MyRegistrations from './pages/MyRegistrations'
 import QRPass from './pages/QRPass'
 import AdminDashboard from './pages/AdminDashboard'
+import AdminAnalytics from './pages/AdminAnalytics'
+import AdminRegistrations from './pages/AdminRegistrations'
+import AdminUsers from './pages/AdminUsers'
 import EventForm from './pages/EventForm'
 import CheckIn from './pages/CheckIn'
 import NotFound from './pages/NotFound'
@@ -31,10 +35,15 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/events/new" element={<EventForm />} />
-          <Route path="/admin/events/:id/edit" element={<EventForm />} />
-          <Route path="/admin/checkin" element={<CheckIn />} />
+          <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            <Route path="/admin/registrations" element={<AdminRegistrations />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/checkin" element={<CheckIn />} />
+            <Route path="/admin/events/new" element={<EventForm />} />
+            <Route path="/admin/events/:id/edit" element={<EventForm />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />

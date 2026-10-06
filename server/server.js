@@ -8,6 +8,7 @@ import eventRoutes from './routes/eventRoutes.js'
 import registrationRoutes from './routes/registrationRoutes.js'
 import paymentRoutes from './routes/paymentRoutes.js'
 import checkinRoutes from './routes/checkinRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/events', eventRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/checkin', checkinRoutes)
+app.use('/api/admin', adminRoutes)
 app.use('/api', registrationRoutes)
 
 app.use((req, res) => {
