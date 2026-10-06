@@ -75,3 +75,28 @@ export const getMyRegistrations = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message })
   }
 }
+
+export const getRegistrationById = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: 'Invalid registration id' })
+    }
+
+    const registration = await Registration.findById(id).populate('event')
+
+    // Same answer for "does not exist" and "belongs to someone else"
+    if (
+      !registration ||
+      !registration.event ||
+      !registration.student.equals(req.user._id)
+    ) {
+      return res.status(404).json({ message: 'Registration not found' })
+    }
+
+    res.json({ registration })
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message })
+  }
+}

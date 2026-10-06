@@ -75,9 +75,18 @@ function MyRegistrations() {
                   {isConfirmed ? 'Confirmed' : 'Payment pending'}
                 </span>
                 <span className="status-line">{paymentLabel(registration)}</span>
-                <Link to={`/events/${event._id}`} className="card-btn">
-                  {isConfirmed ? 'View event' : 'Complete payment'}
-                </Link>
+                {registration.checkedIn && (
+                  <span className="status-line">✓ Checked in</span>
+                )}
+                {isConfirmed ? (
+                  <Link to={`/registrations/${registration._id}`} className="card-btn">
+                    View QR pass
+                  </Link>
+                ) : (
+                  <Link to={`/events/${event._id}`} className="card-btn">
+                    Complete payment
+                  </Link>
+                )}
               </div>
             </div>
           )

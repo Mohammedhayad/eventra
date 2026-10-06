@@ -22,7 +22,10 @@ function Navbar() {
           {user ? (
             <>
               {user.role === 'admin' ? (
-                <NavLink to="/admin">Admin Dashboard</NavLink>
+                <>
+                  <NavLink to="/admin" end>Admin Dashboard</NavLink>
+                  <NavLink to="/admin/checkin">Check-in</NavLink>
+                </>
               ) : (
                 <>
                   <NavLink to="/my-registrations">My Registrations</NavLink>

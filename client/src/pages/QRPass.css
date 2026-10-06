@@ -1,0 +1,69 @@
+.pass-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pass-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.pass-header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: var(--white);
+  padding: 20px;
+}
+
+.pass-header small {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.pass-body {
+  padding: 24px;
+}
+
+.pass-body h3 {
+  margin-bottom: 8px;
+}
+
+.pass-qr {
+  display: inline-block;
+  margin: 16px 0 8px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.pass-code {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.pass-holder {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  text-align: left;
+}
+
+.pass-holder p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.pass-status {
+  margin-top: 16px;
+}
