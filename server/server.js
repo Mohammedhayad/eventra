@@ -15,7 +15,20 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors())
+// Websites allowed to call this API (comma-separated list in CLIENT_URL)
+const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim().replace(/\/$/, ''))
+  .filter(Boolean)
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Requests without an origin (Thunder Client, health checks) are allowed
+      callback(null, !origin || allowedOrigins.includes(origin))
+    },
+  })
+)
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -45,7 +58,7 @@ app.use((req, res) => {
 const startServer = async () => {
   await connectDB()
   app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
+    console.log(`Server running on port ${PORT}`)
   })
 }
 
