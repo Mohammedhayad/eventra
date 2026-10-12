@@ -5,25 +5,43 @@
 }
 
 :root {
-  --primary: #4f46e5;
-  --primary-dark: #4338ca;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --bg: #f9fafb;
+  --primary: #1d6fe8;
+  --primary-dark: #1558c0;
+  --primary-soft: #e8f1fd;
+  --text: #0f1b33;
+  --muted: #6b7a90;
+  --bg: #f4f7fc;
   --white: #ffffff;
-  --border: #e5e7eb;
+  --border: #e4eaf3;
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --danger-bg: #fee2e2;
+  --danger-text: #991b1b;
+  --radius: 16px;
+  --shadow: 0 2px 14px rgba(20, 60, 120, 0.08);
+  --bottom-nav-height: 68px;
 }
 
 body {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);
-  line-height: 1.6;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: var(--primary);
   text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 .container {
@@ -41,61 +59,42 @@ a {
 
 .main-content {
   flex: 1;
-  padding-top: 32px;
+  padding-top: 24px;
   padding-bottom: 32px;
 }
 
-/* Navbar */
-.navbar {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-}
-
-.navbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-}
-
-.brand {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-
-.nav-links a {
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--primary);
-}
-
-.nav-links a.btn-link {
+.btn {
+  display: inline-block;
   background: var(--primary);
   color: var(--white);
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.nav-links a.btn-link:hover {
+.btn:hover {
   background: var(--primary-dark);
 }
 
-/* Hero */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 20px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Legacy styles (used by pages we redesign in chunks 2 and 3) ---------- */
+
 .hero {
   text-align: center;
   padding: 60px 0 40px;
@@ -112,20 +111,6 @@ a {
   margin: 0 auto 24px;
 }
 
-.btn {
-  display: inline-block;
-  background: var(--primary);
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-.btn:hover {
-  background: var(--primary-dark);
-}
-
-/* Cards */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -136,7 +121,7 @@ a {
 .card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius);
   padding: 24px;
 }
 
@@ -148,23 +133,15 @@ a {
   color: var(--muted);
 }
 
-/* Footer */
-.footer {
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  padding: 20px 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
+/* ---------- Phones: leave room for the bottom tab bar ---------- */
 
-/* Small screens */
-@media (max-width: 600px) {
-  .hero h1 {
-    font-size: 1.8rem;
+@media (max-width: 767px) {
+  .main-content {
+    padding-top: 16px;
+    padding-bottom: calc(var(--bottom-nav-height) + 24px);
   }
 
-  .navbar-inner {
-    justify-content: center;
+  .footer {
+    display: none;
   }
 }

@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, Mail, Lock } from 'lucide-react'
 import api from '../services/api'
 import useAuth from '../hooks/useAuth'
+import Logo from '../components/Logo'
+import AuthInput from '../components/AuthInput'
 import { isCollegeEmail, COLLEGE_EMAIL_MESSAGE } from '../utils/validators'
 import './Auth.css'
 
@@ -10,6 +13,7 @@ function Login() {
   const { login } = useAuth()
 
   const [formData, setFormData] = useState({ email: '', password: '' })
+  const [remember, setRemember] = useState(true)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -36,7 +40,7 @@ function Login() {
       const response = await api.post('/auth/login', formData)
       const { token, user } = response.data
 
-      login(token, user)
+      login(token, user, remember)
       navigate(user.role === 'admin' ? '/admin' : '/dashboard')
     } catch (err) {
       setError(
@@ -49,36 +53,51 @@ function Login() {
   }
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-card">
-        <h2>Welcome back</h2>
-        <p className="auth-subtitle">Login with your college mail id.</p>
+    <div className="auth-screen">
+      <div className="auth-screen-inner">
+        <Link to="/" className="auth-back" aria-label="Back">
+          <ArrowLeft size={22} />
+        </Link>
+
+        <div className="auth-brand">
+          <Logo size="lg" stacked />
+        </div>
+
+        <h2>Welcome back!</h2>
+        <p className="auth-subtitle">Login to your account</p>
 
         {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group">
-            <label htmlFor="email">College email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="name@bmsit.in"
-            />
-          </div>
+          <AuthInput
+            icon={Mail}
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="College email (name@bmsit.in)"
+            autoComplete="email"
+          />
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Your password"
-            />
+          <AuthInput
+            icon={Lock}
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            autoComplete="current-password"
+          />
+
+          <div className="auth-row">
+            <label className="remember">
+              <input
+                type="checkbox"
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+              />
+              Remember me
+            </label>
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
@@ -87,7 +106,7 @@ function Login() {
         </form>
 
         <p className="auth-footer">
-          New here? <Link to="/register">Create an account</Link>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

@@ -2,11 +2,12 @@ import { Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminLayout from './components/AdminLayout'
-import Home from './pages/Home'
+import HomeRoute from './pages/HomeRoute'
 import Events from './pages/Events'
 import EventDetails from './pages/EventDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Profile from './pages/Profile'
 import StudentDashboard from './pages/StudentDashboard'
 import MyRegistrations from './pages/MyRegistrations'
 import QRPass from './pages/QRPass'
@@ -22,11 +23,15 @@ function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomeRoute />} />
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['student']} />}>
           <Route path="/dashboard" element={<StudentDashboard />} />

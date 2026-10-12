@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, User, GraduationCap, Mail, Lock } from 'lucide-react'
 import api from '../services/api'
+import Logo from '../components/Logo'
+import AuthInput from '../components/AuthInput'
 import { isCollegeEmail, COLLEGE_EMAIL_MESSAGE } from '../utils/validators'
 import './Auth.css'
 
@@ -68,75 +71,69 @@ function Register() {
   }
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-card">
+    <div className="auth-screen">
+      <div className="auth-screen-inner">
+        <Link to="/" className="auth-back" aria-label="Back">
+          <ArrowLeft size={22} />
+        </Link>
+
+        <div className="auth-brand">
+          <Logo size="lg" stacked />
+        </div>
+
         <h2>Create your account</h2>
-        <p className="auth-subtitle">Use your college mail id to sign up.</p>
+        <p className="auth-subtitle">Use your college mail id to sign up</p>
 
         {error && <div className="alert alert-error">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group">
-            <label htmlFor="name">Full name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your name"
-            />
-          </div>
+          <AuthInput
+            icon={User}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Full name"
+            autoComplete="name"
+          />
 
-          <div className="form-group">
-            <label htmlFor="collegeId">College ID / USN (optional)</label>
-            <input
-              id="collegeId"
-              name="collegeId"
-              type="text"
-              value={formData.collegeId}
-              onChange={handleChange}
-              placeholder="Your college ID"
-            />
-          </div>
+          <AuthInput
+            icon={GraduationCap}
+            name="collegeId"
+            value={formData.collegeId}
+            onChange={handleChange}
+            placeholder="College ID / USN (optional)"
+          />
 
-          <div className="form-group">
-            <label htmlFor="email">College email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="name@bmsit.in"
-            />
-            <span className="form-hint">Only @bmsit.in emails are allowed.</span>
-          </div>
+          <AuthInput
+            icon={Mail}
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="College email (name@bmsit.in)"
+            autoComplete="email"
+          />
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="At least 6 characters"
-            />
-          </div>
+          <AuthInput
+            icon={Lock}
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password (at least 6 characters)"
+            autoComplete="new-password"
+          />
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Type the password again"
-            />
-          </div>
+          <AuthInput
+            icon={Lock}
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            placeholder="Confirm password"
+            autoComplete="new-password"
+          />
 
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Creating account...' : 'Create account'}
